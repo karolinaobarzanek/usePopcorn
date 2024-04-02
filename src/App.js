@@ -53,38 +53,50 @@ const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
 export default function App() {
+  const [query, setQuery] = useState("");
+
   const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const query = "interstellar";
+  const tempQuery = "interstellar";
 
   useEffect(function() {
     async function fetchMovies() {
-      try {setIsLoading(true);
-      const res = await fetch(`http://www.omdbapi.com/?s=${query}&apikey=${KEY}`);
-      
-      if (!res.ok) throw new Error("Something went wrong with fetching movies");
-      
-      
-      const data = await res.json();
-      if (data.Response === "False") throw new Error("Movie not found");
+      try {
+        setIsLoading(true);
+        setError("");
+        const res = await fetch(`http://www.omdbapi.com/?s=${query}&apikey=${KEY}`);
+        
+        if (!res.ok) throw new Error("Something went wrong with fetching movies");
+        
+        
+        const data = await res.json();
+        if (data.Response === "False") throw new Error("Movie not found");
 
-      setMovies(data.Search);
+        setMovies(data.Search);
       
       } catch (err) {
-        console.error(err.message);
-        setError(err.message);
+          console.error(err.message);
+          setError(err.message);
       } finally {
-        setIsLoading(false);
+          setIsLoading(false);
       }
-      fetchMovies();} 
-    }, []);
+    }
+
+      if(query.length < 3) {
+        setMovies([]);
+        setError("");
+        return;
+      }
+
+      fetchMovies();
+    }, [query]);
 
   return (
     <>
       <NavBar>
-        <Search />
+        <Search query={query} setQuery={setQuery}/>
         <NumResults movies={movies} />
       </NavBar>
 
@@ -144,8 +156,8 @@ function Logo() {
   );
 }
 
-function Search() {
-  const [query, setQuery] = useState("");
+function Search({query, setQuery}) {
+  
 
   return (
     <input
