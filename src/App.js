@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import {KEY} from "./APIkey";
-
+import StarRaring from './StarRating';
 
 const tempMovieData = [
   {
@@ -253,6 +253,8 @@ function Movie({ movie, onSelectMovie }) {
 
 function MovieDetails({selectedId, onCloseMovie}) {
   const [movie, setMovie] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+
   const {
     Title: title, 
     Year: year, 
@@ -268,16 +270,20 @@ function MovieDetails({selectedId, onCloseMovie}) {
 
   useEffect(function() {
     async function getMovieDetails() {
+      setIsLoading(true);
       const res = await fetch(`http://www.omdbapi.com/?i=${selectedId}&apikey=${KEY}`);
       const data = await res.json();
       setMovie(data);
+      setIsLoading(false);
     }
     getMovieDetails();
-  }, [])
+  }, [selectedId])
 
 
   return (
     <div className="details"> 
+    {isLoading ? <Loader /> :
+    <>
       <header>
         <button className="btn-back" onClick={onCloseMovie}>&larr;</button>
         <img src={poster} alt={`Poster of ${movie} movie`} />
@@ -290,10 +296,16 @@ function MovieDetails({selectedId, onCloseMovie}) {
       </header>
 
       <section>
+      <div className="rating">
+        <StarRaring maxRating={10} size={24}/>
+      </div>
+      
         <p><em>{plot}</em></p>
         <p>Starring: {actors}</p>
         <p>Dirrected by {director}</p>
       </section>
+      </>
+      }
     </div>
   );
 }
