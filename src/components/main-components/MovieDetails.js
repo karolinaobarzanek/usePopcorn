@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import StarRating from "./StarRating";
 import Loader from "./Loader";
-import {KEY} from "./APIkey";
+import {KEY} from "../../APIkey";
 
 export default function MovieDetails({selectedId, onCloseMovie, onAddWatched, watched}) {
     const [movie, setMovie] = useState({});

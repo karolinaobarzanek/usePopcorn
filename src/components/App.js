@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
-import {KEY} from "./APIkey";
-import NavBar from "./NavBar";
-import NumResults from "./NumResults";
-import Search from "./Search";
-import Main from "./Main";
-import Box from "./Box";
-import Loader from "./Loader";
-import MovieList from "./MovieList";
-import ErrorMessage from "./ErrorMessage";
-import MovieDetails from "./MovieDetails";
-import WatchedSummary from "./WatchedSummary";
-import WatchedMoviesList from "./WatchedMoviesList";
+import {KEY} from "../APIkey";
+import NavBar from "./navbar-components/NavBar";
+import NumResults from "./navbar-components/NumResults";
+import Search from "./navbar-components/Search";
+import Main from "./main-components/Main";
+import Box from "./main-components/Box";
+import Loader from "./main-components/Loader";
+import MovieList from "./main-components/MovieList";
+import ErrorMessage from "./main-components/ErrorMessage";
+import MovieDetails from "./main-components/MovieDetails";
+import WatchedSummary from "./main-components/WatchedSummary";
+import WatchedMoviesList from "./main-components/WatchedMoviesList";
 
 
 const average = (arr) =>
