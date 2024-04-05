@@ -41,6 +41,8 @@ export default function App() {
     setWatched(watched => watched.filter(movie => movie.imdbID !== id));
   }
 
+  
+
   useEffect(function() {
     const controller = new AbortController();
     async function fetchMovies() {
@@ -57,8 +59,8 @@ export default function App() {
         setMovies(data.Search);
         setError("");
       } catch (err) {
-          console.error(err.message);
           if (err.name !== "AbortError") {
+            console.log(err.message);
             setError(err.message);
           }
       } finally {
