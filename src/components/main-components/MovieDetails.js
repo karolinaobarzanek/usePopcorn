@@ -44,7 +44,7 @@ export default function MovieDetails({selectedId, onCloseMovie, onAddWatched, wa
         setIsLoading(true);
         const res = await fetch(`http://www.omdbapi.com/?i=${selectedId}&apikey=${KEY}`);
         const data = await res.json();
-        setMovie(data);
+        setMovie(data); 
         setIsLoading(false);
       }
       getMovieDetails();
